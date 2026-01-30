@@ -5,7 +5,7 @@
     {
       "id": "napcat-plugin-builtin",
       "name": "内置插件",
-      "version": "1.1.0",
+      "version": "1.0.0",
       "description": "NapCat 内置插件",
       "author": "NapNeko",
       "homepage": "https://napcat.napneko.icu",
