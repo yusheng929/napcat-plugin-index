@@ -88,7 +88,7 @@
     {
       "id": "napcat-plugin-tsai",
       "name": "AI 绘画",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "AI绘画插件",
       "author": "Tavre",
       "homepage": "https://github.com/Tavre/napcat-plugin-tsai",
