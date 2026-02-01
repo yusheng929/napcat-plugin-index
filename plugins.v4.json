@@ -19,8 +19,8 @@
     {
       "id": "napcat-plugin-aicat",
       "name": "AI Cat",
-      "version": "1.0.0",
-      "description": "智能AI猫娘助手插件，支持 AI 对话、群管理、自定义指令、定时任务等功能",
+      "version": "1.2.0",
+      "description": "智能AI猫娘助手插件，AI 对话帮助你群管理、自定义指令、定时任务等功能",
       "author": "冷曦",
       "homepage": "https://github.com/lengxi-root/napcat-plugin-aicat",
       "downloadUrl": "https://github.com/lengxi-root/napcat-plugin-aicat/releases/download/latest/napcat-plugin-aicat.zip",
@@ -33,13 +33,14 @@
     {
       "id": "napcat-plugin-play",
       "name": "Play 娱乐",
-      "version": "1.0.0",
-      "description": "娱乐插件，meme表情包制作。",
+      "version": "1.2.0",
+      "description": "娱乐插件，meme表情包，点歌，AI绘画(免费)制作。",
       "author": "冷曦",
       "homepage": "https://github.com/lengxi-root/napcat-plugin-play",
       "downloadUrl": "https://github.com/lengxi-root/napcat-plugin-play/releases/download/latest/napcat-plugin-play.zip",
       "tags": [
         "娱乐"
+        "AI"
       ],
       "minVersion": "4.14.0"
     },
@@ -74,7 +75,7 @@
     {
       "id": "napcat-plugin-workflow",
       "name": "AI可视化工作流",
-      "version": "1.0.0",
+      "version": "1.2.0",
       "description": "AI工作流，可视化web拓展面板",
       "author": "冷曦",
       "homepage": "https://github.com/lengxi-root/napcat-plugin-workflow",
