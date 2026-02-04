@@ -189,7 +189,7 @@
       "description": "NapCat固定表情消息回应",
       "author": "鸡太美",
       "homepage": "https://github.com/ovoox/napcat-plugin-qemoji",
-      "downloadUrl": "https://github.com/ovoox/napcat-plugin-group-revoke/releases/download/v1.0.0/napcat-plugin-group-revoke.zip",
+      "downloadUrl": "https://github.com/ovoox/napcat-plugin-qemoji/releases/download/v1.0.0/napcat-plugin-qemoji.zip",
       "tags": [
         "工具",
         "表情"
