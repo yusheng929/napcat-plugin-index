@@ -264,6 +264,20 @@
         "自动"
       ],
       "minVersion": "4.14.0"
+    },
+        {
+      "id": "napcat-plugin-diytitle",
+      "name": "自助头衔",
+      "version": "1.0.0",
+      "description": "NapCat群聊自助头衔",
+      "author": "鸡太美",
+      "homepage": "https://github.com/ovoox/napcat-plugin-diytitle",
+      "downloadUrl": "https://github.com/ovoox/napcat-plugin-diytitle/releases/download/v1.0.0/napcat-plugin-diytitle.zip",
+      "tags": [
+        "工具",
+        "头衔"
+      ],
+      "minVersion": "4.14.0"
     }
   ]
 }
