@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updateTime": "2026-02-06T12:21:07Z",
+  "updateTime": "2026-02-06T14:33:44Z",
   "plugins": [
     {
       "id": "napcat-plugin-builtin",
@@ -47,7 +47,7 @@
     {
       "id": "napcat-plugin-play",
       "name": "Play 娱乐",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "description": "娱乐插件，meme表情包，点歌，AI绘画(免费)制作。",
       "author": "冷曦",
       "homepage": "https://github.com/lengxi-root/napcat-plugin-play",
@@ -227,13 +227,55 @@
     {
       "id": "napcat-plugin-steam-depot",
       "name": "Steam Depot",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "description": "从 GitHub 仓库和 ManifestHub 数据源获取 Steam 游戏的 Manifest 和 Depot 解密密钥，自动生成 Lua 脚本并打包发送到 QQ 群",
       "author": "AQiaoYo",
       "homepage": "https://github.com/AQiaoYo/napcat-plugin-steam-depot",
-      "downloadUrl": "https://github.com/AQiaoYo/napcat-plugin-steam-depot/releases/download/v1.0.0/napcat-plugin-steam-depot.zip",
+      "downloadUrl": "https://github.com/AQiaoYo/napcat-plugin-steam-depot/releases/download/v1.1.0/napcat-plugin-steam-depot.zip",
       "tags": [
         "工具"
+      ],
+      "minVersion": "4.14.0"
+    },
+    {
+      "id": "napcat-plugin-delta-force",
+      "name": "三角洲行动",
+      "version": "1.0.0",
+      "description": "三角洲行动游戏数据查询插件，支持扫码登录、战绩查询、日报周报、特勤处利润、AI锐评、TTS语音等功能",
+      "author": "冷曦",
+      "homepage": "https://github.com/Entropy-Increase-Team/napcat-plugin-delta-force",
+      "downloadUrl": "https://github.com/Entropy-Increase-Team/napcat-plugin-delta-force/releases/download/latest/napcat-plugin-delta-force.zip",
+      "tags": [
+        "游戏",
+        "工具"
+      ],
+      "minVersion": "4.14.0"
+    },
+        {
+      "id": "napcat-plugin-autoaccept",
+      "name": "自动同意群/好友申请",
+      "version": "1.0.0",
+      "description": "NapCat自动同意加群/加好友申请",
+      "author": "鸡太美",
+      "homepage": "https://github.com/ovoox/napcat-plugin-autoaccept",
+      "downloadUrl": "https://github.com/ovoox/napcat-plugin-autoaccept/releases/download/v1.0.0/napcat-plugin-autoaccept.zip",
+      "tags": [
+        "群管",
+        "自动"
+      ],
+      "minVersion": "4.14.0"
+    },
+        {
+      "id": "napcat-plugin-diytitle",
+      "name": "自助头衔",
+      "version": "1.0.0",
+      "description": "NapCat群聊自助头衔",
+      "author": "鸡太美",
+      "homepage": "https://github.com/ovoox/napcat-plugin-diytitle",
+      "downloadUrl": "https://github.com/ovoox/napcat-plugin-diytitle/releases/download/v1.0.0/napcat-plugin-diytitle.zip",
+      "tags": [
+        "工具",
+        "头衔"
       ],
       "minVersion": "4.14.0"
     }
