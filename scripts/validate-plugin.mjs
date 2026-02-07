@@ -18,10 +18,12 @@
  *   node scripts/validate-plugin.mjs --check-links      # 校验所有插件下载链接（定时巡检用）
  */
 
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, mkdtempSync, rmSync, createWriteStream } from 'fs';
 import { execSync } from 'child_process';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import https from 'https';
+import { tmpdir } from 'os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -271,6 +273,114 @@ function getDiffPlugins(baseRef) {
     }
 }
 
+/**
+ * 下载文件
+ */
+function downloadFile(url, dest) {
+    return new Promise((resolve, reject) => {
+        const file = createWriteStream(dest);
+        https.get(url, (response) => {
+            if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+                // simple redirect limit
+                file.close();
+                downloadFile(response.headers.location, dest).then(resolve).catch(reject);
+                return;
+            }
+            if (response.statusCode !== 200) {
+                file.close();
+                reject(new Error(`Status ${response.statusCode}`));
+                return;
+            }
+            response.pipe(file);
+            file.on('finish', () => {
+                file.close();
+                resolve();
+            });
+        }).on('error', (err) => {
+            file.close();
+            try { rmSync(dest, { force: true }); } catch { }
+            reject(err);
+        });
+    });
+}
+
+/**
+ * 校验 package.json 的包名是否与插件 ID 一致
+ * 以及包名规范 (无中文/大写)
+ */
+async function validatePackageName(plugin, tempDirArg) {
+    const parentDir = tempDirArg || mkdtempSync(join(tmpdir(), 'napcat-vcheck-'));
+    const zipPath = join(parentDir, `${plugin.id}.zip`);
+    const extractPath = join(parentDir, plugin.id);
+
+    try {
+        logInfo(`[${plugin.id}] 下载包进行 package.json 校验...`);
+        await downloadFile(plugin.downloadUrl, zipPath);
+
+        // 解压
+        try {
+            // Linux/Mac unzip
+            try {
+                execSync(`unzip -o "${zipPath}" -d "${extractPath}"`, { stdio: 'ignore' });
+            } catch {
+                // Windows PowerShell
+                execSync(`powershell -command "Expand-Archive -Path '${zipPath}' -DestinationPath '${extractPath}' -Force"`, { stdio: 'ignore' });
+            }
+        } catch (e) {
+            logError(plugin.id, '解压失败，无法验证 package.json');
+            return;
+        }
+
+        // 查找 package.json
+        // 有些发布包直接包含 package.json，有些包含 package/package.json (npm pack)
+        let pkgPath = join(extractPath, 'package.json');
+        if (!existsSync(pkgPath)) pkgPath = join(extractPath, 'package', 'package.json');
+
+        // 还没找到可能在第一层目录里
+        if (!existsSync(pkgPath)) {
+            // 简单搜索一层子目录
+            try {
+                const files = fs.readdirSync(extractPath);
+                for (const f of files) {
+                    const subPath = join(extractPath, f, 'package.json');
+                    if (existsSync(subPath)) {
+                        pkgPath = subPath;
+                        break;
+                    }
+                }
+            } catch { }
+        }
+
+        if (existsSync(pkgPath)) {
+            const content = readFileSync(pkgPath, 'utf-8');
+            try {
+                const pkg = JSON.parse(content);
+                if (pkg.name !== plugin.id) {
+                    logError(plugin.id, `package.json 中的 name ("${pkg.name}") 与插件 ID ("${plugin.id}") 不一致！`);
+                } else {
+                    // 通常 ID 正则已经排除了中文和大写，这里再次确认
+                    if (!PLUGIN_ID_PATTERN.test(pkg.name)) {
+                        logError(plugin.id, `package.json 中的 name ("${pkg.name}") 包含非法字符 (中文/大写等)，必须符合: napcat-plugin-[a-z0-9-]`);
+                    } else {
+                        logOk(`[${plugin.id}] package.json name 校验通过`);
+                    }
+                }
+            } catch (jsonErr) {
+                logError(plugin.id, '无法解析 package.json');
+            }
+        } else {
+            logWarn(plugin.id, '未找到 package.json，跳过包名一致性校验');
+        }
+
+    } catch (e) {
+        logError(plugin.id, `下载或校验失败: ${e.message}`);
+    } finally {
+        if (!tempDirArg) { // cleanup only if we created it
+            try { rmSync(parentDir, { recursive: true, force: true }); } catch { }
+        }
+    }
+}
+
 // ======================== 主流程 ========================
 
 async function main() {
@@ -325,6 +435,11 @@ async function main() {
         if (diff) {
             if (diff.added.length > 0) {
                 logInfo(`新增 ${diff.added.length} 个插件: ${diff.added.map(p => p.id).join(', ')}`);
+                // 对新增插件进行深度校验
+                console.log(colors.cyan(`正在验证新增插件的包一致性...`));
+                for (const plugin of diff.added) {
+                    await validatePackageName(plugin);
+                }
             }
             if (diff.updated.length > 0) {
                 for (const u of diff.updated) {
@@ -333,6 +448,11 @@ async function main() {
                     if (u.old.downloadUrl !== u.new.downloadUrl) changes.push('downloadUrl 已更新');
                     if (u.old.description !== u.new.description) changes.push('description 已更新');
                     logInfo(`更新 ${u.new.id}: ${changes.join(', ') || '其他字段变更'}`);
+
+                    // 如果版本变更或下载地址变更，进行深度校验
+                    if (u.old.version !== u.new.version || u.old.downloadUrl !== u.new.downloadUrl) {
+                        await validatePackageName(u.new);
+                    }
                 }
             }
             if (diff.removed.length > 0) {
