@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updateTime": "2026-02-07T14:13:17Z",
+  "updateTime": "2026-02-07T14:20:27Z",
   "plugins": [
     {
       "id": "napcat-plugin-builtin",
@@ -288,6 +288,19 @@
       "author": "AQiaoYo",
       "homepage": "https://github.com/AQiaoYo/napcat-plugin-qq-version",
       "downloadUrl": "https://github.com/AQiaoYo/napcat-plugin-qq-version/releases/download/v1.1.0/napcat-plugin-qq-version.zip",
+      "tags": [
+        "工具"
+      ],
+      "minVersion": "4.14.0"
+    },
+    {
+      "id": "napcat-plugin-terraria-wiki",
+      "name": "泰拉瑞亚灾厄模组Wiki查询",
+      "version": "0.1.2",
+      "description": "从wiki截取页面",
+      "author": "",
+      "homepage": "https://github.com/NanTingPer/napcat-terraria-wiki-plugin",
+      "downloadUrl": "https://github.com/NanTingPer/napcat-terraria-wiki-plugin/releases/download/v0.1.2/napcat-plugin-terraria-wiki.zip",
       "tags": [
         "工具"
       ],
