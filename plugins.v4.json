@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updateTime": "2026-02-09T03:13:50Z",
+  "updateTime": "2026-02-09T03:43:11Z",
   "plugins": [
     {
       "id": "napcat-plugin-builtin",
@@ -322,11 +322,11 @@
     {
       "id": "napcat-plugin-epic-free",
       "name": "Epic喜加一",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Epic Games Store 每周免费游戏订阅推送插件",
       "author": "AQiaoYo",
       "homepage": "https://github.com/AQiaoYo/napcat-plugin-epic-free",
-      "downloadUrl": "https://github.com/AQiaoYo/napcat-plugin-epic-free/releases/download/v1.0.0/napcat-plugin-epic-free.zip",
+      "downloadUrl": "https://github.com/AQiaoYo/napcat-plugin-epic-free/releases/download/v1.0.1/napcat-plugin-epic-free.zip",
       "tags": [
         "订阅",
         "游戏"
